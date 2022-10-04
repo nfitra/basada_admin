@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "261352245084",
+    "project_id": "banksampah-82c3a",
+    "storage_bucket": "banksampah-82c3a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:261352245084:android:2827227fec4ee69f0f6399",
+        "android_client_info": {
+          "package_name": "com.zeekands.basada_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "261352245084-pfe1dkm5be51ggbbog0ppm9o5ngg5qjm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6XF_R9gxC_DO8ahwB6VAidIMafj8ys38"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "261352245084-pfe1dkm5be51ggbbog0ppm9o5ngg5qjm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
