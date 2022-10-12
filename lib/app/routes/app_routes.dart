@@ -9,6 +9,7 @@ abstract class Routes {
   static const BASE_URL = _Paths.BASE_URL;
   static const TOKEN = _Paths.TOKEN;
   static const USER_ID = _Paths.USER_ID;
+  static const ROLE = _Paths.ROLE;
 }
 
 abstract class _Paths {
@@ -16,7 +17,8 @@ abstract class _Paths {
   static const HOME = '/home';
   static const LOGIN = '/login';
   static const DETAIL = '/detail';
-  static const BASE_URL = 'https://banksampah.pekanbaru.go.id/mobile/';
+  static const BASE_URL = 'https://banksampah.pekanbaru.go.id/';
   static const TOKEN = 'token';
   static const USER_ID = 'user_id';
+  static const ROLE = 'role';
 }

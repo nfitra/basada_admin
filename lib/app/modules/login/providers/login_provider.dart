@@ -6,7 +6,7 @@ import '../models/login_model.dart';
 class LoginProvider extends GetConnect {
   Future<LoginModel> login(String email, String password) async {
     final response = await post(
-      "${Routes.BASE_URL}auth/login",
+      "${Routes.BASE_URL}api/login",
       {
         "email": email,
         "password": password,
@@ -15,6 +15,7 @@ class LoginProvider extends GetConnect {
     if (response.status.hasError) {
       return Future.error(response.statusText.toString());
     } else {
+      print(response.body);
       return LoginModel.fromJson(response.body);
     }
   }

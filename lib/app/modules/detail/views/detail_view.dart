@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../../routes/app_pages.dart';
 import '../controllers/detail_controller.dart';
 
 class DetailView extends GetView<DetailController> {
@@ -28,127 +29,125 @@ class DetailView extends GetView<DetailController> {
           onPressed: () => Get.back(),
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          10.verticalSpace,
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20.r),
-            child: Image.asset(
-              'assets/images/plastic.jpg',
-              height: 200.h,
-              width: 400.w,
-              fit: BoxFit.cover,
+      body: controller.obx(
+        (state) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20.r),
+              child: Image.network(
+                Routes.BASE_URL + controller.detail.value.rImage!,
+                height: .25.sh,
+                width: 400.w,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          20.verticalSpace,
-          Text(
-            'Botol Plastik',
-            style: TextStyle(
-              fontSize: ScreenUtil().setSp(18),
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            'Harga per Kg : Rp 3.000',
-            style: TextStyle(
-              fontSize: ScreenUtil().setSp(12),
-              fontWeight: FontWeight.normal,
-              color: grey,
-            ),
-          ),
-          5.verticalSpace,
-          Row(
-            children: [
-              Text(
-                'Rp 18.000',
-                style: TextStyle(
-                  fontSize: ScreenUtil().setSp(18),
-                  fontWeight: FontWeight.bold,
-                  color: green,
-                ),
-              ),
-              10.horizontalSpace,
-              Text(
-                'Berat total : 6 kg',
-                style: TextStyle(
-                  fontSize: ScreenUtil().setSp(12),
-                  fontWeight: FontWeight.normal,
-                  color: Colors.grey,
-                ),
-              ),
-            ],
-          ),
-          20.verticalSpace,
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                radius: 20.w,
-                backgroundColor: greyLight,
-                child: Image.asset(
-                  'assets/images/ic_login.png',
-                  width: 32.w,
-                  height: 32.h,
-                ),
-              ),
-              10.horizontalSpace,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Ilham Fajar',
-                    style: TextStyle(
-                      fontSize: ScreenUtil().setSp(14),
-                    ),
-                  ),
-                  2.verticalSpace,
-                  Text(
-                    '081234567890',
-                    style: TextStyle(
-                      fontSize: ScreenUtil().setSp(12),
-                      fontWeight: FontWeight.normal,
-                      color: grey,
-                    ),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              const Icon(
-                Icons.call,
-                color: green,
-              ),
-            ],
-          ),
-          10.verticalSpace,
-          Text(
-            'Jl. Sultan Iskandar Muda no.32, Jakarta selatan. ',
-            style: TextStyle(
-              fontSize: ScreenUtil().setSp(12),
-            ),
-          ),
-          20.verticalSpace,
-          Flexible(
-              child: DefaultTabController(
-            length: 2,
-            child: Column(
+            10.verticalSpace,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const TabBar(
-                  labelColor: Colors.green,
-                  unselectedLabelColor: Colors.black,
-                  indicatorSize: TabBarIndicatorSize.label,
-                  tabs: [
-                    Tab(text: 'Detail'),
-                    Tab(text: 'Lokasi'),
+                Flexible(
+                  child: Text(
+                    '${controller.detail.value.jenisSampah}',
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(18),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                IconButton(
+                    onPressed: () {
+                      editJenisSampah();
+                    },
+                    icon: const Icon(
+                      Icons.edit,
+                      color: green,
+                    ))
+              ],
+            ),
+            Row(
+              children: [
+                Text(
+                  'Rp. ${controller.usCurrency.format(int.parse(controller.detail.value.harga.toString()))}',
+                  style: TextStyle(
+                    fontSize: ScreenUtil().setSp(18),
+                    fontWeight: FontWeight.bold,
+                    color: green,
+                  ),
+                ),
+                10.horizontalSpace,
+                Text(
+                  'Berat total : ${controller.detail.value.rWeight} Kg',
+                  style: TextStyle(
+                    fontSize: ScreenUtil().setSp(12),
+                    fontWeight: FontWeight.normal,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
+            10.verticalSpace,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 20.w,
+                  backgroundColor: greyLight,
+                  child: Image.asset(
+                    'assets/images/ic_login.png',
+                    width: 32.w,
+                    height: 32.h,
+                  ),
+                ),
+                10.horizontalSpace,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '${controller.detail.value.namaNasabah}',
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(14),
+                      ),
+                    ),
                   ],
                 ),
-                SizedBox(
-                  height: 250.h,
-                  child: TabBarView(
-                    children: <Widget>[
-                      Container(
-                        child: Column(
+                const Spacer(),
+                const Icon(
+                  Icons.call,
+                  color: green,
+                ),
+              ],
+            ),
+            10.verticalSpace,
+            Obx(() {
+              return Text(
+                controller.alamat.value,
+                style: TextStyle(
+                  fontSize: ScreenUtil().setSp(12),
+                ),
+              );
+            }),
+            10.verticalSpace,
+            Flexible(
+                child: DefaultTabController(
+              length: 2,
+              child: Column(
+                children: [
+                  const TabBar(
+                    labelColor: Colors.green,
+                    unselectedLabelColor: Colors.black,
+                    indicatorSize: TabBarIndicatorSize.label,
+                    tabs: [
+                      Tab(text: 'Detail'),
+                      Tab(text: 'Lokasi'),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 250.h,
+                    child: TabBarView(
+                      children: <Widget>[
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             10.verticalSpace,
@@ -161,7 +160,7 @@ class DetailView extends GetView<DetailController> {
                             ),
                             10.verticalSpace,
                             Text(
-                              "12 April 2021",
+                              "${controller.detail.value.jadwalJemput}",
                               style: TextStyle(
                                 fontSize: ScreenUtil().setSp(12),
                                 fontWeight: FontWeight.normal,
@@ -184,7 +183,7 @@ class DetailView extends GetView<DetailController> {
                                     ),
                                     9.verticalSpace,
                                     Text(
-                                      "Rp 17.000 (5 kg)",
+                                      "${controller.detail.value.rWeight} Kg",
                                       style: TextStyle(
                                         fontSize: ScreenUtil().setSp(18),
                                         fontWeight: FontWeight.bold,
@@ -195,137 +194,7 @@ class DetailView extends GetView<DetailController> {
                                 ),
                                 IconButton(
                                     onPressed: () {
-                                      Get.bottomSheet(
-                                        backgroundColor: Colors.transparent,
-                                        Container(
-                                          height: 230.h,
-                                          width: 1.sw,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(10.r),
-                                              topRight: Radius.circular(10.r),
-                                            ),
-                                          ),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              10.verticalSpace,
-                                              Text(
-                                                "Edit Berat Sampah",
-                                                style: TextStyle(
-                                                  fontSize:
-                                                      ScreenUtil().setSp(14),
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              20.verticalSpace,
-                                              Container(
-                                                height: 50.h,
-                                                width: 1.sw,
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 10.w),
-                                                decoration: BoxDecoration(
-                                                  color: greyLight,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.r),
-                                                ),
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      "5 kg",
-                                                      style: TextStyle(
-                                                        fontSize: ScreenUtil()
-                                                            .setSp(14),
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                    const Spacer(),
-                                                    IconButton(
-                                                      onPressed: () {},
-                                                      icon: const Icon(
-                                                        Icons.add,
-                                                        color: green,
-                                                      ),
-                                                    ),
-                                                    IconButton(
-                                                      onPressed: () {},
-                                                      icon: const Icon(
-                                                        Icons.remove,
-                                                        color: green,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              20.verticalSpace,
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  ElevatedButton(
-                                                    onPressed: () {},
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      backgroundColor: red,
-                                                      minimumSize:
-                                                          Size(148.w, 50.h),
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.r),
-                                                      ),
-                                                    ),
-                                                    child: Text(
-                                                      "Batal",
-                                                      style: TextStyle(
-                                                        fontSize: ScreenUtil()
-                                                            .setSp(12),
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                        color: white,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  ElevatedButton(
-                                                    onPressed: () {},
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      backgroundColor: green,
-                                                      minimumSize:
-                                                          Size(148.w, 50.h),
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.r),
-                                                      ),
-                                                    ),
-                                                    child: Text(
-                                                      "Simpan",
-                                                      style: TextStyle(
-                                                        fontSize: ScreenUtil()
-                                                            .setSp(12),
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                        color: white,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ).paddingSymmetric(
-                                            horizontal: 30.w,
-                                            vertical: 20.h,
-                                          ),
-                                        ),
-                                      );
+                                      editBeratSampah();
                                     },
                                     icon: const Icon(
                                       Icons.edit,
@@ -343,7 +212,7 @@ class DetailView extends GetView<DetailController> {
                             ),
                             10.verticalSpace,
                             Text(
-                              "Botol plastik sudah di cuci",
+                              "${controller.detail.value.rNotes}",
                               style: TextStyle(
                                 fontSize: ScreenUtil().setSp(12),
                                 fontWeight: FontWeight.normal,
@@ -394,26 +263,241 @@ class DetailView extends GetView<DetailController> {
                             ),
                           ],
                         ),
-                      ),
-                      Flexible(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20.r),
-                          child: const GoogleMap(
-                            initialCameraPosition: CameraPosition(
-                              target: LatLng(45.521563, -122.677433),
-                              zoom: 11.0,
+                        Obx(() {
+                          return Flexible(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20.r),
+                              child: GoogleMap(
+                                initialCameraPosition: CameraPosition(
+                                  target: controller.latLng.value,
+                                  zoom: 18.0,
+                                ),
+                                markers: <Marker>{
+                                  Marker(
+                                    markerId: const MarkerId("1"),
+                                    position: controller.geoToLatlong(
+                                      controller.detail.value.location
+                                          .toString(),
+                                    ),
+                                  )
+                                },
+                              ),
+                            ).paddingOnly(top: 5.h),
+                          );
+                        }),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )),
+          ],
+        ).paddingSymmetric(horizontal: 25.w),
+      ),
+    );
+  }
+
+  void editJenisSampah() {
+    Get.bottomSheet(
+      backgroundColor: Colors.transparent,
+      Container(
+        height: 230.h,
+        width: 1.sw,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10.r),
+            topRight: Radius.circular(10.r),
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            10.verticalSpace,
+            Text(
+              "Edit Jenis Sampah",
+              style: TextStyle(
+                fontSize: ScreenUtil().setSp(14),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            20.verticalSpace,
+            Obx(() {
+              return Container(
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                decoration: BoxDecoration(
+                  color: greyLight,
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
+                child: DropdownButton(
+                  isExpanded: true,
+                  items: controller.jenisSampah.value
+                      .map((e) => DropdownMenuItem(
+                            value: e.jName,
+                            child: Text(
+                              e.jName ?? "",
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                        ).paddingOnly(top: 5.h),
-                      ),
-                    ],
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    controller.selectedJenisSampah.value = value.toString();
+                    controller.idSampahTemp.value = controller.jenisSampah.value
+                        .firstWhere((element) => element.jName == value)
+                        .sId!;
+                    print(controller.idSampahTemp.value);
+                  },
+                  value: controller.selectedJenisSampah.value,
+                ),
+              );
+            }),
+            20.verticalSpace,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: red,
+                    minimumSize: Size(148.w, 50.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
                   ),
-                )
+                  child: Text(
+                    "Batal",
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(12),
+                      fontWeight: FontWeight.normal,
+                      color: white,
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    controller.updateBeratSampah(controller.idSampahTemp.value);
+                    Get.back();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: green,
+                    minimumSize: Size(148.w, 50.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                  ),
+                  child: Text(
+                    "Simpan",
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(12),
+                      fontWeight: FontWeight.normal,
+                      color: white,
+                    ),
+                  ),
+                ),
               ],
             ),
-          )),
-        ],
-      ).paddingSymmetric(horizontal: 25.w),
+          ],
+        ).paddingSymmetric(
+          horizontal: 30.w,
+          vertical: 20.h,
+        ),
+      ),
+    );
+  }
+
+  void editBeratSampah() {
+    Get.bottomSheet(
+      backgroundColor: Colors.transparent,
+      Container(
+        height: 230.h,
+        width: 1.sw,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10.r),
+            topRight: Radius.circular(10.r),
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            10.verticalSpace,
+            Text(
+              "Edit Berat Sampah",
+              style: TextStyle(
+                fontSize: ScreenUtil().setSp(14),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            20.verticalSpace,
+            Container(
+              height: 50.h,
+              width: 1.sw,
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              decoration: BoxDecoration(
+                color: greyLight,
+                borderRadius: BorderRadius.circular(10.r),
+              ),
+              child: TextFormField(
+                keyboardType: TextInputType.number,
+                controller: controller.beratSampahController,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Masukkan Berat Sampah",
+                ),
+              ),
+            ),
+            20.verticalSpace,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: red,
+                    minimumSize: Size(148.w, 50.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                  ),
+                  child: Text(
+                    "Batal",
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(12),
+                      fontWeight: FontWeight.normal,
+                      color: white,
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    controller.updateBeratSampah(controller.idSampahTemp.value);
+                    Get.back();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: green,
+                    minimumSize: Size(148.w, 50.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                  ),
+                  child: Text(
+                    "Simpan",
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(12),
+                      fontWeight: FontWeight.normal,
+                      color: white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ).paddingSymmetric(
+          horizontal: 30.w,
+          vertical: 20.h,
+        ),
+      ),
     );
   }
 }
