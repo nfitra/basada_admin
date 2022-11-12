@@ -1,6 +1,7 @@
 import 'package:basada_admin/app/modules/home/models/list_penjemputan.dart';
 import 'package:basada_admin/app/modules/home/models/profile_model.dart';
 import 'package:basada_admin/app/modules/home/providers/profile_profider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -12,6 +13,8 @@ class HomeController extends GetxController with StateMixin {
   GetStorage box = GetStorage();
   final dataPenjemputan = <ListPenjemputan>[].obs;
   final profile = ProfileModel().obs;
+  final firebaseMessagingToken = FirebaseMessaging.instance.getToken();
+  String fcmToken = '';
 
   @override
   void onInit() async {
@@ -19,7 +22,17 @@ class HomeController extends GetxController with StateMixin {
     FlutterNativeSplash.remove();
     change(null, status: RxStatus.empty());
     // final regId = await FirebaseMessaging.instance.getToken();
+    await addDevice();
     getDataPenjemputan();
+  }
+
+  Future<void> addDevice() async {
+    await firebaseMessagingToken.then((value) {
+      fcmToken = value.toString();
+    });
+    await ListPenjemputanProvider()
+        .addDevice(box.read('token'), fcmToken)
+        .then((value) => print("Device added"));
   }
 
   void logout() {
