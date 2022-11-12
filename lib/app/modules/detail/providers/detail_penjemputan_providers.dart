@@ -16,6 +16,7 @@ class DetailPenjemputanProviders extends GetConnect {
     if (response.hasError) {
       return Future.error(response.statusText.toString());
     } else {
+      print(response.body);
       return DetailPenjemputan.fromJson(response.body as Map<String, dynamic>);
     }
   }
@@ -39,7 +40,7 @@ class DetailPenjemputanProviders extends GetConnect {
     if (response.hasError) {
       return Future.error(response.statusText.toString());
     } else {
-      return response.body['message'];
+      return 'success';
     }
   }
 
@@ -75,7 +76,7 @@ class DetailPenjemputanProviders extends GetConnect {
     if (response.hasError) {
       return Future.error(response.statusText.toString());
     } else {
-      return response.body['message'];
+      return 'success';
     }
   }
 
@@ -85,9 +86,6 @@ class DetailPenjemputanProviders extends GetConnect {
       'id_sampah': id_sampah,
       'berat': int.parse(berat),
     });
-    print(id_sampah);
-    print(berat);
-    print(id);
 
     final response = await put(
       '${Routes.BASE_URL}api/request/$id',
@@ -100,8 +98,66 @@ class DetailPenjemputanProviders extends GetConnect {
     if (response.hasError) {
       return Future.error(response.statusText.toString());
     } else {
-      print("Berhasil");
-      return response.body;
+      return 'success';
     }
   }
+
+  Future<String> rejectRequest(
+      String id, String idSampah, String bearer, String berat) async {
+    final form = FormData({
+      'status': 2,
+      'id_sampah': idSampah,
+      'berat': berat,
+    });
+
+    final response = await put(
+      '${Routes.BASE_URL}api/request/reject/$id',
+      form,
+      headers: {
+        'token': bearer,
+      },
+    );
+
+    return "success";
+  }
+
+  Future<String> doneRequest(
+      String id, String idSampah, String bearer, String berat) async {
+    final form = FormData({
+      'status': 2,
+      'id_sampah': idSampah,
+      'berat': berat,
+    });
+
+    final response = await put(
+      '${Routes.BASE_URL}api/request/done/$id',
+      form,
+      headers: {
+        'token': bearer,
+      },
+    );
+
+    return 'success';
+  }
+
+  Future<String> confirmRequest(
+      String id, String idSampah, String bearer, String berat) async {
+    final form = FormData({
+      'status': 1,
+      'id_sampah': idSampah,
+      'berat': berat,
+    });
+
+    final response = await put(
+      '${Routes.BASE_URL}api/request/confirm/$id',
+      form,
+      headers: {
+        'token': bearer,
+      },
+    );
+
+    return 'success';
+  }
 }
+
+//TODO : Buat ubah status penjemputan dan pembatalan

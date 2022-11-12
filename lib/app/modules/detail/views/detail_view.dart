@@ -1,4 +1,5 @@
 import 'package:basada_admin/utils/colors.dart';
+import 'package:basada_admin/utils/status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -130,171 +131,374 @@ class DetailView extends GetView<DetailController> {
             }),
             10.verticalSpace,
             Flexible(
-                child: DefaultTabController(
-              length: 2,
-              child: Column(
-                children: [
-                  const TabBar(
-                    labelColor: Colors.green,
-                    unselectedLabelColor: Colors.black,
-                    indicatorSize: TabBarIndicatorSize.label,
-                    tabs: [
-                      Tab(text: 'Detail'),
-                      Tab(text: 'Lokasi'),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 250.h,
-                    child: TabBarView(
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            10.verticalSpace,
-                            Text(
-                              "Tanggal Penjemputan",
-                              style: TextStyle(
-                                fontSize: ScreenUtil().setSp(14),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            10.verticalSpace,
-                            Text(
-                              "${controller.detail.value.jadwalJemput}",
-                              style: TextStyle(
-                                fontSize: ScreenUtil().setSp(12),
-                                fontWeight: FontWeight.normal,
-                                color: grey,
-                              ),
-                            ),
-                            18.verticalSpace,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Berat Setelah Diperiksa",
-                                      style: TextStyle(
-                                        fontSize: ScreenUtil().setSp(14),
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    9.verticalSpace,
-                                    Text(
-                                      "${controller.detail.value.rWeight} Kg",
-                                      style: TextStyle(
-                                        fontSize: ScreenUtil().setSp(18),
-                                        fontWeight: FontWeight.bold,
-                                        color: green,
-                                      ),
-                                    ),
-                                  ],
+              child: DefaultTabController(
+                length: 2,
+                child: Column(
+                  children: [
+                    const TabBar(
+                      labelColor: Colors.green,
+                      unselectedLabelColor: Colors.black,
+                      indicatorSize: TabBarIndicatorSize.label,
+                      tabs: [
+                        Tab(text: 'Detail'),
+                        Tab(text: 'Lokasi'),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 250.h,
+                      child: TabBarView(
+                        children: <Widget>[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              10.verticalSpace,
+                              Text(
+                                "Tanggal Penjemputan",
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(14),
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                IconButton(
+                              ),
+                              10.verticalSpace,
+                              Text(
+                                "${controller.detail.value.jadwalJemput}",
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(12),
+                                  fontWeight: FontWeight.normal,
+                                  color: grey,
+                                ),
+                              ),
+                              18.verticalSpace,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Berat Setelah Diperiksa",
+                                        style: TextStyle(
+                                          fontSize: ScreenUtil().setSp(14),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      9.verticalSpace,
+                                      Text(
+                                        "${controller.detail.value.rWeight} Kg",
+                                        style: TextStyle(
+                                          fontSize: ScreenUtil().setSp(18),
+                                          fontWeight: FontWeight.bold,
+                                          color: green,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  IconButton(
                                     onPressed: () {
                                       editBeratSampah();
                                     },
                                     icon: const Icon(
                                       Icons.edit,
                                       color: green,
-                                    )),
-                              ],
-                            ),
-                            10.verticalSpace,
-                            Text(
-                              "Catatan",
-                              style: TextStyle(
-                                fontSize: ScreenUtil().setSp(14),
-                                fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            10.verticalSpace,
-                            Text(
-                              "${controller.detail.value.rNotes}",
-                              style: TextStyle(
-                                fontSize: ScreenUtil().setSp(12),
-                                fontWeight: FontWeight.normal,
-                                color: grey,
+                              10.verticalSpace,
+                              Text(
+                                "Catatan",
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(14),
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            20.verticalSpace,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () {},
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: red,
-                                    minimumSize: Size(148.w, 50.h),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.r),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    "Batalkan Penjemputan",
-                                    style: TextStyle(
-                                      fontSize: ScreenUtil().setSp(12),
-                                      fontWeight: FontWeight.normal,
-                                      color: white,
-                                    ),
-                                  ),
+                              10.verticalSpace,
+                              Text(
+                                "${controller.detail.value.rNotes}",
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(12),
+                                  fontWeight: FontWeight.normal,
+                                  color: grey,
                                 ),
-                                ElevatedButton(
-                                  onPressed: () {},
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: green,
-                                    minimumSize: Size(148.w, 50.h),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.r),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    "Selesai",
-                                    style: TextStyle(
-                                      fontSize: ScreenUtil().setSp(12),
-                                      fontWeight: FontWeight.normal,
-                                      color: white,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Obx(() {
-                          return Flexible(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20.r),
-                              child: GoogleMap(
-                                initialCameraPosition: CameraPosition(
-                                  target: controller.latLng.value,
-                                  zoom: 18.0,
-                                ),
-                                markers: <Marker>{
-                                  Marker(
-                                    markerId: const MarkerId("1"),
-                                    position: controller.geoToLatlong(
-                                      controller.detail.value.location
-                                          .toString(),
-                                    ),
-                                  )
-                                },
                               ),
-                            ).paddingOnly(top: 5.h),
-                          );
-                        }),
-                      ],
-                    ),
-                  )
-                ],
+                              20.verticalSpace,
+                              actionButton(getStatus(
+                                  controller.detail.value.keterangan!)),
+                            ],
+                          ),
+                          Obx(
+                            () {
+                              return SizedBox(
+                                width: 1.sw,
+                                height: 200.h,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  child: controller.latLng.value !=
+                                          const LatLng(0, 0)
+                                      ? GoogleMap(
+                                          initialCameraPosition: CameraPosition(
+                                            target: controller.latLng.value,
+                                            zoom: 18.0,
+                                          ),
+                                          markers: <Marker>{
+                                            Marker(
+                                              markerId: const MarkerId("1"),
+                                              position: controller.geoToLatlong(
+                                                controller.detail.value.location
+                                                    .toString(),
+                                              ),
+                                            )
+                                          },
+                                        )
+                                      : Center(
+                                          child: Text("Lokasi tidak ditemukan"),
+                                        ),
+                                ).paddingOnly(top: 5.h),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
-            )),
+            ),
           ],
         ).paddingSymmetric(horizontal: 25.w),
       ),
     );
+  }
+
+  Widget actionButton(String status) {
+    if (status == "Selesai") {
+      return Center(
+        child: Text(
+          "Penjualan Telah Selesai!",
+          style: TextStyle(
+            fontSize: ScreenUtil().setSp(14),
+            fontWeight: FontWeight.bold,
+            color: green,
+          ),
+        ),
+      );
+    }
+    if (status == "Ditolak") {
+      return Center(
+        child: Text(
+          "Penjualan Ditolak!",
+          style: TextStyle(
+            fontSize: ScreenUtil().setSp(14),
+            fontWeight: FontWeight.bold,
+            color: red,
+          ),
+        ),
+      );
+    }
+    if (status == "Menunggu Konfirmasi") {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          ElevatedButton(
+            onPressed: () async {
+              Get.dialog(
+                AlertDialog(
+                  title: const Text("Konfirmasi Penjemputan"),
+                  content: Text(
+                      "Apakah anda yakin ingin mengkonfirmasi penjemputan sampah?"),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: const Text("Tidak"),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        controller.rejectRequest(
+                            controller.idPenjualan,
+                            controller.idSampah.value,
+                            controller.beratSampahController.text);
+                        Get.back();
+                      },
+                      child: const Text("Ya"),
+                    ),
+                  ],
+                ),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: red,
+              minimumSize: Size(148.w, 50.h),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.r),
+              ),
+            ),
+            child: Text(
+              "Batalkan Penjemputan",
+              style: TextStyle(
+                fontSize: ScreenUtil().setSp(12),
+                fontWeight: FontWeight.normal,
+                color: white,
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.dialog(
+                AlertDialog(
+                  title: const Text("Konfirmasi Penjemputan"),
+                  content: Text(
+                      "Apakah anda yakin ingin mengkonfirmasi penjemputan sampah?"),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: const Text("Tidak"),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        controller.confirmRequest(
+                            controller.idPenjualan,
+                            controller.idSampah.value,
+                            controller.beratSampahController.text);
+                        Get.back();
+                      },
+                      child: const Text("Ya"),
+                    ),
+                  ],
+                ),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: blue,
+              minimumSize: Size(148.w, 50.h),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.r),
+              ),
+            ),
+            child: Text(
+              "Jemput",
+              style: TextStyle(
+                fontSize: ScreenUtil().setSp(12),
+                fontWeight: FontWeight.normal,
+                color: white,
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    if (status == "Menunggu Petugas") {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          ElevatedButton(
+            onPressed: () async {
+              Get.dialog(
+                AlertDialog(
+                  title: Text("Batalkan Penjemputan?"),
+                  content: Text(
+                      "Apakah anda yakin ingin membatalkan penjemputan sampah?"),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: Text("Tidak"),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        controller.rejectRequest(
+                            controller.idPenjualan,
+                            controller.idSampah.value,
+                            controller.beratSampahController.text);
+                        Get.back();
+                      },
+                      child: Text("Ya"),
+                    ),
+                  ],
+                ),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: red,
+              minimumSize: Size(148.w, 50.h),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.r),
+              ),
+            ),
+            child: Text(
+              "Batalkan Penjemputan",
+              style: TextStyle(
+                fontSize: ScreenUtil().setSp(12),
+                fontWeight: FontWeight.normal,
+                color: white,
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.dialog(
+                AlertDialog(
+                  title: const Text("Konfirmasi Selesai"),
+                  content: Text(
+                      "Apakah anda yakin ingin menyelesaikan penjemputan sampah?"),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: const Text("Tidak"),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        controller.doneRequest(
+                            controller.idPenjualan,
+                            controller.idSampah.value,
+                            controller.beratSampahController.text);
+                        Get.back();
+                      },
+                      child: const Text("Ya"),
+                    ),
+                  ],
+                ),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: green,
+              minimumSize: Size(148.w, 50.h),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.r),
+              ),
+            ),
+            child: Text(
+              "Selesai",
+              style: TextStyle(
+                fontSize: ScreenUtil().setSp(12),
+                fontWeight: FontWeight.normal,
+                color: white,
+              ),
+            ),
+          )
+        ],
+      );
+    } else {
+      return Center(
+        child: Text(
+          "Penjualan Dibatalkan!",
+          style: TextStyle(
+            fontSize: ScreenUtil().setSp(14),
+            fontWeight: FontWeight.bold,
+            color: red,
+          ),
+        ),
+      );
+    }
   }
 
   void editJenisSampah() {
@@ -345,7 +549,7 @@ class DetailView extends GetView<DetailController> {
                     controller.idSampahTemp.value = controller.jenisSampah.value
                         .firstWhere((element) => element.jName == value)
                         .sId!;
-                    print(controller.idSampahTemp.value);
+                    controller.idSampah.value = controller.idSampahTemp.value;
                   },
                   value: controller.selectedJenisSampah.value,
                 ),
@@ -452,7 +656,9 @@ class DetailView extends GetView<DetailController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.back();
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: red,
                     minimumSize: Size(148.w, 50.h),

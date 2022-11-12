@@ -57,11 +57,8 @@ class HomeController extends GetxController with StateMixin {
         .then(
       (value) => {
         change(null, status: RxStatus.success()),
-        // value = value
-        //     .where(
-        //         (element) => element.keterangan == 'Sampah Belum Dikonfirmasi')
-        //     .toList(),
         dataPenjemputan.assignAll(value),
+        dataPenjemputan.sort((a, b) => a.keterangan!.compareTo(b.keterangan!)),
       },
       onError: (err) {
         change(

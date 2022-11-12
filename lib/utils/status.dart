@@ -6,12 +6,12 @@ String getStatus(String status) {
       return 'Menunggu Petugas';
     case 'Request anda telah ditolak':
       return 'Ditolak';
-    case 'uang sampah telah masuk':
+    case 'Uang sampah telah masuk':
       return 'Selesai';
     case 'Sampah Belum Dikonfirmasi':
       return 'Menunggu Konfirmasi';
     default:
-      return 'Menunggu Konfirmasi';
+      return '-';
   }
 }
 
@@ -21,7 +21,7 @@ Color getStatusColor(String status) {
       return Colors.orange;
     case 'Request anda telah ditolak':
       return Colors.red;
-    case 'uang sampah telah masuk':
+    case 'Uang sampah telah masuk':
       return Colors.green;
     case 'Sampah Belum Dikonfirmasi':
       return Colors.blue;

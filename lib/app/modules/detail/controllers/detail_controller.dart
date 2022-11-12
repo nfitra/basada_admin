@@ -31,11 +31,15 @@ class DetailController extends GetxController with StateMixin {
     await getDetail(Get.arguments.toString());
 
     await getJenisSampah();
-    var data = await getAddress(geoToLatlong(detail.value.location ?? ''));
-    alamat.value = data;
-    latLng.value = geoToLatlong(detail.value.location ?? '');
+
     idSampahTemp.value = detail.value.fkGarbage!;
-    beratSampahController.text = detail.value.rWeight!;
+    beratSampahController.text = detail.value.rWeight.toString();
+    await getAddress(geoToLatlong(detail.value.location ?? '')).then(
+      (value) => alamat.value = value,
+      onError: (error) => alamat.value = 'Belum ada alamat',
+    );
+    //  alamat.value = data;
+    latLng.value = geoToLatlong(detail.value.location ?? '');
   }
 
   Future<void> getDetail(String id) async {
@@ -84,6 +88,9 @@ class DetailController extends GetxController with StateMixin {
   }
 
   LatLng geoToLatlong(String string) {
+    if (string == '') {
+      return const LatLng(0, 0);
+    }
     final String substring = string.substring(34, string.length - 2);
     final List<String> latlong = substring.split(',');
     final LatLng latLng = LatLng(
@@ -93,6 +100,93 @@ class DetailController extends GetxController with StateMixin {
       ),
     );
     return latLng;
+  }
+
+  Future<void> rejectRequest(String id, String idJenis, String berat) async {
+    change(null, status: RxStatus.loading());
+    await DetailPenjemputanProviders()
+        .rejectRequest(id, idJenis, box.read(Routes.TOKEN), berat)
+        .then((value) => {
+              change(
+                null,
+                status: RxStatus.success(),
+              ),
+              getDetail(idPenjualan),
+              Get.snackbar(
+                'Berhasil',
+                'Berhasil menolak permintaan',
+                snackPosition: SnackPosition.BOTTOM,
+                backgroundColor: Colors.green,
+                colorText: Colors.white,
+              ),
+            })
+        .onError(
+      (error, stackTrace) {
+        change(
+          null,
+          status: RxStatus.error('Terjadi kesalahan, silahkan coba lagi'),
+        );
+        return Future.error("Terjadi kesalahan, silahkan coba lagi");
+      },
+    );
+  }
+
+  Future<void> doneRequest(String id, String idJenis, String berat) async {
+    change(null, status: RxStatus.loading());
+    await DetailPenjemputanProviders()
+        .doneRequest(id, idJenis, box.read(Routes.TOKEN), berat)
+        .then((value) => {
+              change(
+                null,
+                status: RxStatus.success(),
+              ),
+              getDetail(idPenjualan),
+              Get.snackbar(
+                'Berhasil',
+                'Berhasil menerima permintaan',
+                snackPosition: SnackPosition.BOTTOM,
+                backgroundColor: Colors.green,
+                colorText: Colors.white,
+              ),
+            })
+        .onError(
+      (error, stackTrace) {
+        change(
+          null,
+          status: RxStatus.error('Terjadi kesalahan, silahkan coba lagi'),
+        );
+        return Future.error("Terjadi kesalahan, silahkan coba lagi");
+      },
+    );
+  }
+
+  Future<void> confirmRequest(String id, String idJenis, String berat) async {
+    change(null, status: RxStatus.loading());
+    await DetailPenjemputanProviders()
+        .confirmRequest(id, idJenis, box.read(Routes.TOKEN), berat)
+        .then((value) => {
+              change(
+                null,
+                status: RxStatus.success(),
+              ),
+              getDetail(idPenjualan),
+              Get.snackbar(
+                'Berhasil',
+                'Berhasil mengkonfirmasi permintaan',
+                snackPosition: SnackPosition.BOTTOM,
+                backgroundColor: Colors.green,
+                colorText: Colors.white,
+              ),
+            })
+        .onError(
+      (error, stackTrace) {
+        change(
+          null,
+          status: RxStatus.error('Terjadi kesalahan, silahkan coba lagi'),
+        );
+        return Future.error("Terjadi kesalahan, silahkan coba lagi");
+      },
+    );
   }
 
   Future<String> getAddress(LatLng coordinate) async {
