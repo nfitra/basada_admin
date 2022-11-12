@@ -13,8 +13,6 @@ class HomeController extends GetxController with StateMixin {
   GetStorage box = GetStorage();
   final dataPenjemputan = <ListPenjemputan>[].obs;
   final profile = ProfileModel().obs;
-  final firebaseMessagingToken = FirebaseMessaging.instance.getToken();
-  String fcmToken = '';
 
   @override
   void onInit() async {
@@ -22,24 +20,19 @@ class HomeController extends GetxController with StateMixin {
     FlutterNativeSplash.remove();
     change(null, status: RxStatus.empty());
     // final regId = await FirebaseMessaging.instance.getToken();
-    await addDevice();
+    print(box.read('id_device'));
     getDataPenjemputan();
   }
 
-  Future<void> addDevice() async {
-    await firebaseMessagingToken.then((value) {
-      fcmToken = value.toString();
-    });
-    await ListPenjemputanProvider()
-        .addDevice(box.read('token'), fcmToken)
-        .then((value) => print("Device added"));
-  }
-
   void logout() {
-    box.remove(Routes.USER_ID);
-    box.remove(Routes.ROLE);
-    box.remove(Routes.TOKEN);
-    Get.offAllNamed(Routes.LOGIN);
+    ListPenjemputanProvider()
+        .deleteDevice(box.read(Routes.TOKEN), box.read('id_device').toString())
+        .then((value) {
+      box.remove(Routes.USER_ID);
+      box.remove(Routes.ROLE);
+      box.remove(Routes.TOKEN);
+      Get.offAllNamed(Routes.LOGIN);
+    });
   }
 
   Future<void> getProfile() async {
