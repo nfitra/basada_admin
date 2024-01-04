@@ -45,7 +45,7 @@ class DetailController extends GetxController with StateMixin {
   Future<void> getDetail(String id) async {
     change(null, status: RxStatus.loading());
     await DetailPenjemputanProviders()
-        .getDetailPenjemputan(box.read(Routes.TOKEN), id)
+        .getDetailPenjemputan(box.read(Routes.token), id)
         .then((value) => {
               detail.value = value,
               selectedJenisSampah.value = value.jenisSampah!,
@@ -68,7 +68,7 @@ class DetailController extends GetxController with StateMixin {
   Future<void> getJenisSampah() async {
     change(null, status: RxStatus.loading());
     await DetailPenjemputanProviders()
-        .getJenisSampah(box.read(Routes.TOKEN))
+        .getJenisSampah(box.read(Routes.token))
         .then((value) => {
               jenisSampah.assignAll(value),
               change(
@@ -105,7 +105,7 @@ class DetailController extends GetxController with StateMixin {
   Future<void> rejectRequest(String id, String idJenis, String berat) async {
     change(null, status: RxStatus.loading());
     await DetailPenjemputanProviders()
-        .rejectRequest(id, idJenis, box.read(Routes.TOKEN), berat)
+        .rejectRequest(id, idJenis, box.read(Routes.token), berat)
         .then((value) => {
               change(
                 null,
@@ -134,7 +134,7 @@ class DetailController extends GetxController with StateMixin {
   Future<void> doneRequest(String id, String idJenis, String berat) async {
     change(null, status: RxStatus.loading());
     await DetailPenjemputanProviders()
-        .doneRequest(id, idJenis, box.read(Routes.TOKEN), berat)
+        .doneRequest(id, idJenis, box.read(Routes.token), berat)
         .then((value) => {
               change(
                 null,
@@ -163,7 +163,7 @@ class DetailController extends GetxController with StateMixin {
   Future<void> confirmRequest(String id, String idJenis, String berat) async {
     change(null, status: RxStatus.loading());
     await DetailPenjemputanProviders()
-        .confirmRequest(id, idJenis, box.read(Routes.TOKEN), berat)
+        .confirmRequest(id, idJenis, box.read(Routes.token), berat)
         .then((value) => {
               change(
                 null,
@@ -209,7 +209,7 @@ class DetailController extends GetxController with StateMixin {
     change(null, status: RxStatus.loading());
     await DetailPenjemputanProviders()
         .updateBeratSampah(idPenjualan, idSampah, beratSampahController.text,
-            box.read(Routes.TOKEN))
+            box.read(Routes.token))
         .then((value) => {
               change(
                 null,
@@ -232,7 +232,7 @@ class DetailController extends GetxController with StateMixin {
     change(null, status: RxStatus.loading());
     await DetailPenjemputanProviders()
         .updateBeratSampah(idPenjualan, idSampah, beratSampahController.text,
-            box.read(Routes.TOKEN))
+            box.read(Routes.token))
         .then((value) => {
               change(
                 null,

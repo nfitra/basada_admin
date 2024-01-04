@@ -13,7 +13,7 @@ class DetailView extends GetView<DetailController> {
   @override
   Widget build(BuildContext context) {
     late GoogleMapController mapController;
-    void _onMapCreated(GoogleMapController controller) {
+    void onMapCreated(GoogleMapController controller) {
       mapController = controller;
     }
 
@@ -37,7 +37,7 @@ class DetailView extends GetView<DetailController> {
             ClipRRect(
               borderRadius: BorderRadius.circular(20.r),
               child: Image.network(
-                Routes.BASE_URL + controller.detail.value.rImage!,
+                Routes.baseUrl + controller.detail.value.rImage!,
                 height: .25.sh,
                 width: 400.w,
                 fit: BoxFit.cover,

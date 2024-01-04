@@ -6,7 +6,7 @@ import '../models/login_model.dart';
 class LoginProvider extends GetConnect {
   Future<LoginModel> login(String email, String password) async {
     final response = await post(
-      "${Routes.BASE_URL}api/login",
+      "${Routes.baseUrl}api/login",
       {
         "email": email,
         "password": password,

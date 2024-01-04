@@ -9,7 +9,7 @@ class ProfileProvider extends GetConnect {
     };
 
     final request = await get(
-      '${Routes.BASE_URL}api/admin/profile',
+      '${Routes.baseUrl}api/admin/profile',
       headers: header,
     );
 

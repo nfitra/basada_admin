@@ -141,7 +141,7 @@ class HomeView extends GetView<HomeController> {
                             leading: ClipRRect(
                               borderRadius: BorderRadius.circular(5.r),
                               child: CachedNetworkImage(
-                                imageUrl: Routes.BASE_URL +
+                                imageUrl: Routes.baseUrl +
                                     controller.dataPenjemputan[index].rImage!,
                                 placeholder: (context, url) => Image.asset(
                                   'assets/images/ic_basada_green.png',

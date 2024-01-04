@@ -8,7 +8,7 @@ class DetailPenjemputanProviders extends GetConnect {
   Future<DetailPenjemputan> getDetailPenjemputan(
       String token, String id) async {
     final response = await get(
-      '${Routes.BASE_URL}api/request/$id',
+      '${Routes.baseUrl}api/request/$id',
       headers: {
         'token': token,
       },
@@ -30,7 +30,7 @@ class DetailPenjemputanProviders extends GetConnect {
     });
 
     final response = await put(
-      '${Routes.BASE_URL}api/request/$id',
+      '${Routes.baseUrl}api/request/$id',
       form,
       headers: {
         'token': bearer,
@@ -48,7 +48,7 @@ class DetailPenjemputanProviders extends GetConnect {
     final token = {
       'token': bearer,
     };
-    final response = await get('${Routes.BASE_URL}api/sampah', headers: token);
+    final response = await get('${Routes.baseUrl}api/sampah', headers: token);
     if (response.hasError) {
       return Future.error(response.statusText.toString());
     } else {
@@ -66,7 +66,7 @@ class DetailPenjemputanProviders extends GetConnect {
     });
 
     final response = await put(
-      '${Routes.BASE_URL}api/request/$id',
+      '${Routes.baseUrl}api/request/$id',
       form,
       headers: {
         'token': bearer,
@@ -81,14 +81,14 @@ class DetailPenjemputanProviders extends GetConnect {
   }
 
   Future<String> updateBeratSampah(
-      String id, String id_sampah, String berat, String bearer) async {
+      String id, String idSampah, String berat, String bearer) async {
     final form = FormData({
-      'id_sampah': id_sampah,
+      'id_sampah': idSampah,
       'berat': int.parse(berat),
     });
 
     final response = await put(
-      '${Routes.BASE_URL}api/request/$id',
+      '${Routes.baseUrl}api/request/$id',
       form,
       headers: {
         'token': bearer,
@@ -111,7 +111,7 @@ class DetailPenjemputanProviders extends GetConnect {
     });
 
     final response = await put(
-      '${Routes.BASE_URL}api/request/reject/$id',
+      '${Routes.baseUrl}api/request/reject/$id',
       form,
       headers: {
         'token': bearer,
@@ -130,7 +130,7 @@ class DetailPenjemputanProviders extends GetConnect {
     });
 
     final response = await put(
-      '${Routes.BASE_URL}api/request/done/$id',
+      '${Routes.baseUrl}api/request/done/$id',
       form,
       headers: {
         'token': bearer,
@@ -149,7 +149,7 @@ class DetailPenjemputanProviders extends GetConnect {
     });
 
     final response = await put(
-      '${Routes.BASE_URL}api/request/confirm/$id',
+      '${Routes.baseUrl}api/request/confirm/$id',
       form,
       headers: {
         'token': bearer,

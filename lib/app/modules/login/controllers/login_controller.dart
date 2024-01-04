@@ -42,11 +42,11 @@ class LoginController extends GetxController with StateMixin {
     LoginProvider().login(email, password).then(
       (resp) => {
         change(null, status: RxStatus.success()),
-        box.write(Routes.TOKEN, resp.data?.token),
-        box.write(Routes.USER_ID, resp.data?.email),
-        box.write(Routes.ROLE, resp.data?.role),
+        box.write(Routes.token, resp.data?.token),
+        box.write(Routes.userId, resp.data?.email),
+        box.write(Routes.role, resp.data?.role),
         addDevice()
-            .then((value) => Get.offAllNamed(Routes.HOME, arguments: 'login'))
+            .then((value) => Get.offAllNamed(Routes.home, arguments: 'login'))
       },
       onError: (err) {
         var error = err.toString();

@@ -12,7 +12,7 @@ class ListPenjemputanProvider extends GetConnect {
       'token': bearer,
     };
     final response = await get(
-      "${Routes.BASE_URL}api/request/admin",
+      "${Routes.baseUrl}api/request/admin",
       headers: headers,
     );
     if (response.status.hasError) {
@@ -28,7 +28,7 @@ class ListPenjemputanProvider extends GetConnect {
       'registration_id': registrationId,
     });
     final response = await _dio.post(
-      '${Routes.BASE_URL}/api/device',
+      '${Routes.baseUrl}/api/device',
       data: formData,
       options: dio.Options(
         headers: {
@@ -46,7 +46,7 @@ class ListPenjemputanProvider extends GetConnect {
 
   Future<String> deleteDevice(String token, String idDevice) async {
     final response = await _dio.delete(
-      '${Routes.BASE_URL}/api/device/$idDevice',
+      '${Routes.baseUrl}/api/device/$idDevice',
       options: dio.Options(
         headers: {
           'token': token,

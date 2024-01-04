@@ -46,7 +46,7 @@ void main() async {
       builder: (context, child) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: "Application",
-        initialRoute: box.hasData(Routes.TOKEN) ? Routes.HOME : Routes.LOGIN,
+        initialRoute: box.hasData(Routes.token) ? Routes.home : Routes.login,
         getPages: AppPages.routes,
         theme: ThemeData(
           primarySwatch: Colors.blue,

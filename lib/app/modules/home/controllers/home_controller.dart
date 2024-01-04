@@ -26,17 +26,17 @@ class HomeController extends GetxController with StateMixin {
 
   void logout() {
     ListPenjemputanProvider()
-        .deleteDevice(box.read(Routes.TOKEN), box.read('id_device').toString())
+        .deleteDevice(box.read(Routes.token), box.read('id_device').toString())
         .then((value) {
-      box.remove(Routes.USER_ID);
-      box.remove(Routes.ROLE);
-      box.remove(Routes.TOKEN);
-      Get.offAllNamed(Routes.LOGIN);
+      box.remove(Routes.userId);
+      box.remove(Routes.role);
+      box.remove(Routes.token);
+      Get.offAllNamed(Routes.login);
     });
   }
 
   Future<void> getProfile() async {
-    final bearer = box.read(Routes.TOKEN);
+    final bearer = box.read(Routes.token);
     change(null, status: RxStatus.loading());
     await ProfileProvider().getProfile(bearer).then((value) {
       profile.value = value;
@@ -47,7 +47,7 @@ class HomeController extends GetxController with StateMixin {
   }
 
   void navigateAndRefresh(dynamic arguments) async {
-    final result = await Get.toNamed(Routes.DETAIL, arguments: arguments);
+    final result = await Get.toNamed(Routes.detail, arguments: arguments);
     if (result == null) {
       getDataPenjemputan(); // call your own function here to refresh screen
     }
@@ -58,7 +58,7 @@ class HomeController extends GetxController with StateMixin {
     await getProfile();
     await ListPenjemputanProvider()
         .getListPenjemputan(
-      box.read(Routes.TOKEN),
+      box.read(Routes.token),
     )
         .then(
       (value) => {
